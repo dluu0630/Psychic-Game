@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Psychic Game</title>
+  <link rel="stylesheet" type="text/css" href="assets/css/reset.css">
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+  <link href="https://fonts.googleapis.com/css?family=Gloria+Hallelujah" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <div id="game">
+    <h1>Psychic Game</h1>
+      <br>
+    <strong>Press any key to begin!</strong>   
+  
+  </div>
+
+  <script type="text/javascript">
+  // All of the computers choices
+    var computerChoices = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+
+    var wins = 0;
+    var losses = 0;
+    var guessesLeft = 9;
+    // Array that will hold all the user's guesses in each round
+    var guessesSoFar = [];
+    // What the user picks by pressing a key
+    var userGuess = null;
+    // Have computer pick a letter and store it in letterToBeGuessed
+    var letterToBeGuessed = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+    console.log("Wins: " + wins + " Losses: " + losses + " GuessesLeft: " + guessesLeft + " Guesses so far: " + guessesSoFar + " Your Guessese so far: " + letterToBeGuessed);   
+
+    document.onkeyup = function(event) {
+
+  // When user presses a key, it records it and saves to userGuess
+  var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
+
+  // Add the user's guess to guessesSoFar array but only if it wasn't already previously picked by the user
+  if (guessesSoFar.indexOf(userGuess) < 0 && computerChoices.indexOf(userGuess) >= 0) {
+    guessesSoFar[guessesSoFar.length]=userGuess;
+    // if it is a new letter then decrease remaining guesses by 1
+    guessesLeft--;
+  }
+
+  // if letterToBeGuessed is same as userGuess then record it as a winand then reset guessesLeft to 9, and empty the guessesSoFar array
+  if (letterToBeGuessed == userGuess) {
+    wins++;
+    alert("Winner Winner Chicken Dinner!")
+    console.log("Winner Winner Chicken Dinner!");
+    guessesLeft = 9;
+    guessesSoFar = [];
+    letterToBeGuessed = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+    console.log("Wins: " + wins + " Losses: " + losses + " GuessesLeft: " + guessesLeft + " Guesses so far: " + guessesSoFar + " Computer picked: " + letterToBeGuessed);
+  }
+
+  // if guessesLeft gets to 0 then record as loss, then reset to 9, and empty the guessesSoFar array
+  if (guessesLeft == 0) {
+    losses++;
+    alert("Game Over!")
+    console.log("Game Over!");
+    guessesLeft = 9;
+    guessesSoFar = [];
+    letterToBeGuessed = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+    console.log("Wins: " + wins + " Losses: " + losses + " GuessesLeft: " + guessesLeft + " Guesses so far: " + guessesSoFar + " Computer picked: " + letterToBeGuessed);
+  }
+
+  var html = "<p><h1>The Psychic Game</h1></p>" + "<p>Guess what letter I\'m thinking of</p>" + "<p>Wins: " + wins + "</p>" + "<p>Losses: " + losses + "</p>" + "<p>Guesses Left: " + guessesLeft + "</p>" + "<p>Your Guesses so far: " + guessesSoFar + "</p>";
+  
+  document.querySelector("#game").innerHTML = html;           
+
+}
+
+
+
+  </script>
+
+</body>
+
+</html>
